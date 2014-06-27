@@ -1,0 +1,80 @@
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Couchbase Server product documentation"><style>
+					body{
+						padding-top:60px; /* make the container go all the way to the bottom of the top bar */
+					}</style><link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet"></head><body><header class="navbar navbar-inverse navbar-fixed-top"><div class="navbar-inner"><div class="container-fluid container"><a class="brand" href="/">Couchbase Documentation</a></div></div></header><div id="content" class="container-fluid container"><div class="row-fluid"><nav class="span3"><div class="well"><ul class="nav nav-list"><li><a href="../topics/intro.html">Introduction</a></li><li><a href="../topics/getting-started.html">Getting Started</a></li><li><a href="../topics/tutorial-intro.html">Tutorial</a><ul class="nav nav-list"><li><a href="../topics/tutorial-intro.html">Tutorial</a></li><li class="active"><a href="../topics/quick-start.html">Quick start</a><ul class="nav nav-list"></ul></li><li><a href="../topics/prep.html">Preparations</a></li><li><a href="../topics/wecome.html">The Welcome Page</a></li><li><a href="../topics/manage-beers.html">Managing Beers</a></li><li><a href="../topics/tutorial-wrap.html">Wrapping Up</a></li></ul></li><li>Advanced usage</li><li>Using the APIs</li></ul></div></nav><main class="span9">
+	<h1 class="title topictitle1">Quick start</h1>
+
+	<div class="body conbody">
+		<ul class="ul">
+			<li class="li"><p class="p">Download <a class="xref" href="http://www.couchbase.com/download" target="_blank">Couchbase Server</a> and install it. Make sure to install the
+					beer-sample data set when you run the wizard because this tutorial application works
+					with it.</p>
+</li>
+
+
+			<li class="li"><p class="p">Clone the repository and install dependencies (express, jade):</p>
+
+
+<pre class="pre codeblock">
+shell&gt; git clone git://github.com/couchbaselabs/beersample-node 
+Cloning into 'beersample-node' #... 
+shell&gt; cd beersample-node 
+shell&gt; npm install
+</pre>
+
+			</li>
+
+
+			<li class="li">Some views need to be set up. You can set up the views manually via the Web UI, or
+				invoke the beer.js script located in the beersample-node directory with the –setup
+				parameter.
+
+			<p class="p">In the beer design document, create a development view called by_name, then promote it
+				to a production view (more details later on why this is neccessary):</p>
+
+			<pre class="pre codeblock">
+function (doc, meta) {
+    if (doc.type &amp;&amp; doc.type == "beer") {
+        emit(doc.name, null);
+    }
+}
+</pre>
+
+			
+			<p class="p">Create another design document called brewery, and add a view called by_name (don't forget
+				to promote it to a production view as above!):</p>
+
+			<pre class="pre codeblock">
+function (doc, meta) {
+    if (doc.type &amp;&amp; doc.type == "brewery") {
+        emit(doc.name, null);
+    }
+}
+</pre>
+
+			</li>
+
+
+			<li class="li"><p class="p">Invoke the beer.js script:</p>
+
+
+			<pre class="pre codeblock">
+shell&gt; node beer.js
+Server running at http://127.0.0.1:1337/
+</pre>
+
+			</li>
+
+			<li class="li"><p class="p">Navigate to <span class="ph filepath">http://localhost:1337/welcome</span>, and enjoy the application!</p>
+</li>
+
+		</ul>
+
+	</div>
+
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="../topics/tutorial-intro.html">Tutorial</a></div>
+</div>
+</div></main></div></div><hr><footer><p style="text-align: center;">copyright 2014 <a href="http://www.couchbase.com/">Couchbase</a></p></footer><script src="http://code.jquery.com/jquery-1.9.1.min.js"></script><script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script></body></html>

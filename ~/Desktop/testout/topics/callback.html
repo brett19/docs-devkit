@@ -1,0 +1,58 @@
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Couchbase Server product documentation"><style>
+					body{
+						padding-top:60px; /* make the container go all the way to the bottom of the top bar */
+					}</style><link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet"></head><body><header class="navbar navbar-inverse navbar-fixed-top"><div class="navbar-inner"><div class="container-fluid container"><a class="brand" href="/">Couchbase Documentation</a></div></div></header><div id="content" class="container-fluid container"><div class="row-fluid"><nav class="span3"><div class="well"><ul class="nav nav-list"><li><a href="../topics/intro.html">Introduction</a></li><li><a href="../topics/getting-started.html">Getting Started</a></li><li><a href="../topics/tutorial-intro.html">Tutorial</a></li><li>Advanced usage</li><li>Using the APIs<ul class="nav nav-list"><li><a href="../topics/data-types.html">Data types with Node.js</a></li><li><a href="../topics/concurrency.html">Concurrency with CAS and Locking</a></li><li class="active"><a href="../topics/callback.html">Callback and MultiCallback Format</a><ul class="nav nav-list"></ul></li><li><a href="../topics/error-handling.html">Error Handling</a></li></ul></li></ul></div></nav><main class="span9">
+	<h1 class="title topictitle1">Callback and MultiCallback Format</h1>
+
+	<div class="body conbody">
+		<p class="p">The Node.js Couchbase driver employs a callback pattern to notify the application when
+			results are ready. These callbacks are passed to the operation methods and the callbacks
+			are invoked later once the results or errors are ready. All storage and retrieval
+			operations follow the same callback pattern and have the following parameters:</p>
+
+
+		<ul class="ul">
+			<li class="li"><samp class="ph codeph">error</samp>
+				<p class="p">For singular operations, this parameter will contain an Error object representing any
+					error that occurred during the execution of the operation, or alternatively will
+					contain null if no errors occurred.</p>
+
+				<p class="p">For a batch operation, this will contain either 1 or 0 representing if an error
+					occurred on any of the batched operations.</p>
+
+			</li>
+
+
+			<li class="li"><samp class="ph codeph">result/results</samp>
+				<p class="p">For a singular operation, this parameter will contain an object with the properties
+					as listed below.</p>
+
+				<p class="p">For a batched operation, this will be an object where the keys match the keys your
+					operation targeted, and the values will contain an object containing the fields
+					listed below.</p>
+
+				
+				<ul class="ul">
+					<li class="li"><samp class="ph codeph">value</samp> This will contain the value of the key that was requested
+				if the operation was a retrieval type operation.</li>
+
+					
+				<li class="li"><samp class="ph codeph">error</samp> This will contain an Error
+				object representing any errors that occurred during execution of this particular batch
+				operation.</li>
+
+				
+				<li class="li"><samp class="ph codeph">cas</samp> This will contain an opaque object representing the resulting CAS
+				value of the key that was operated upon. This value is not meant to be user-facing, but
+				should be passed directly to other operations for locking purposes.</li>
+
+				</ul>
+ 
+			
+			</li>
+
+		</ul>
+
+	</div>
+
+</main></div></div><hr><footer><p style="text-align: center;">copyright 2014 <a href="http://www.couchbase.com/">Couchbase</a></p></footer><script src="http://code.jquery.com/jquery-1.9.1.min.js"></script><script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script></body></html>
